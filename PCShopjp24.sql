@@ -102,3 +102,10 @@ select naziv from PCshop where naziv like '%Links%' and djelatnik=1;
 select naziv from PCshop where djelatnik=1 is not null;
 select garancija from proizvod where garancija like '%2025%';
 select garancija from proizvod where garancija like '%2024%';
+
+update proizvod set garancija = '2030-03-23' where sifra=4;
+update proizvod set garancija = '2040-12-23' where sifra=1;
+update korisnik set ime = 'Luka' where sifra =1;
+update korisnik set prezime = 'Lukovic' where sifra =1;
+update proizvod set naziv = 'NZXT kuciste' where sifra=1;
+update PCshop set naziv = 'PCshop' where sifra=1;
