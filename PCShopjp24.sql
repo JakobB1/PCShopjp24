@@ -94,3 +94,11 @@ values  ('Marko','Markovic'),
 select * from usluga;
 insert into usluga(djelatnik,korisnik)
 values  (1,5),(2,4),(3,3),(4,2),(5,1);
+
+
+select ime from korisnik where ime like '%Marko%';
+select ime from korisnik where ime like '%an';
+select naziv from PCshop where naziv like '%Links%' and djelatnik=1;
+select naziv from PCshop where djelatnik=1 is not null;
+select garancija from proizvod where garancija like '%2025%';
+select garancija from proizvod where garancija like '%2024%';
