@@ -127,4 +127,8 @@ inner join korisnik  d on  c.korisnik = d.sifra
 inner join stavka    e on  c.sifra    = e.racun 
 inner join proizvod  f on  e.proizvod = f.sifra
 where e.proizvod is not null 
-order by c.brojracuna and f.cijena desc;
+order by e.proizvod asc;
+
+select * from proizvod;
+delete from proizvod where cijena = 300;
+delete from proizvod where cijena = 1;
