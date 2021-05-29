@@ -34,7 +34,8 @@ create table proizvod(
 create table stavka(
   sifra int not null primary key auto_increment,
   proizvod int not null,
-  racun int not null
+  racun int not null,
+  kolicina decimal(18,2) not null
 );
 
 create table korisnik(
@@ -67,24 +68,63 @@ values  ('Maja','Majic'),
         
 select * from racun;
 insert into racun(datumpocetka,brojracuna,korisnik,djelatnik)
-values  ('2012-06-21',123,1,3),
-        ('2013-01-30',231,2,2),
-        ('2014-02-27',321,3,1);
+values  ('2012-06-21',1,1,1),
+        ('2013-01-30',2,2,2),
+        ('2014-02-27',3,3,3);
         
 select * from proizvod;
 insert into proizvod(naziv,cijena,garancija)
-values  ('Razer tipkovnica',1099.99,'2025-03-03'),
-        ('Razer mis',599.99,'2027-12-05'),
-        ('Logitech tipkovnica',899.99,'2028-02-09'),
-        ('Logitech mis',499.99,'2026-10-06'),
-        ('Corsair mis',449.99,'2026-11-07'),
-        ('Corsair tipkovnica',1199.99,'2026-12-23');
-        
+values  ('Razer podloga',299.99,'2023-03-03'),
+        ('Razer tipkovnica',899.99,'2023-03-03'),
+        ('Razer mis',599.99,'2024-03-03'),
+        ('Razer slusalice',1099.99,'2024-03-03'),
+        ('Corsair podloga',1099.99,'2025-03-03'),
+        ('Corsair tipkovnica',1299.99,'2025-03-03'),
+        ('Corsair mis',999.99,'2023-03-03'),
+        ('Corsair slusalice',1099.99,'2024-03-08'),
+        ('Logitech podloga',299.99,'2024-03-13'),
+        ('Logitech mis',599.99,'2025-03-03'),
+        ('Logitech tipkovnica',1199.99,'2025-03-23'),
+        ('Logitech slusalice',699.99,'2026-03-03'),
+        ('Amd procesor',1599.99,'2026-03-03'),
+        ('Intel procesor',1399.99,'2025-03-03'),
+        ('Nvidia graficka',2599.99,'2026-12-23'),
+        ('Amd graficka',1799.99,'2025-03-03'),
+        ('NZXT kuciste',2199.99,'2030-03-03'),
+        ('ASRock kuciste',399.99,'2025-09-21'),
+        ('Corsair kuciste',1399.99,'2026-11-27');
+              
 select * from stavka;
-insert into stavka(proizvod,racun)
-values  (1,1),
-        (2,1),
-        (3,2),
-        (4,2),
-        (5,3),
-        (6,3);
+insert into stavka(proizvod,racun,kolicina)
+values  (1,1,1),
+        (2,1,1),
+        (3,1,1),
+        (4,2,1),
+        (5,2,1),
+        (6,3,1),
+        (7,3,1),
+        (8,3,1);
+             
+update proizvod set naziv = 'Razer slusalice' where sifra=1;
+update proizvod set naziv = 'Razer stolica' where sifra=2;
+update proizvod set naziv = 'Logitech podloga' where sifra=3;
+update proizvod set naziv = 'Logitech zvucnici' where sifra=4;
+update proizvod set naziv = 'Corsair RAM 2x8 ddr4' where sifra=5;
+update proizvod set naziv = 'Corsair podloga' where sifra=6;
+
+select naziv from proizvod where naziv like '%razer%';
+select garancija from proizvod where garancija like '%2025%';
+select naziv from proizvod where naziv like '%corsair%';
+select naziv from proizvod where naziv like '%corsair%';
+select naziv from proizvod where sifra is not null;
+select naziv from proizvod where sifra=2;
+
+select f.naziv , f.cijena , f.garancija , c.brojracuna, d.ime , e.proizvod 
+from pcshop a 
+inner join djelatnik b on  a.sifra    = b.pcshop
+inner join racun     c on  b.sifra    = c.djelatnik
+inner join korisnik  d on  c.korisnik = d.sifra 
+inner join stavka    e on  c.sifra    = e.racun 
+inner join proizvod  f on  e.proizvod = f.sifra
+where e.proizvod is not null 
+order by c.brojracuna and f.cijena desc;
