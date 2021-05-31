@@ -44,11 +44,13 @@ create table korisnik(
   prezime varchar(30) not null
 );
 
+
 alter table djelatnik add foreign key(pcshop) references pcshop(sifra);
 alter table racun add foreign key(korisnik) references korisnik(sifra);
 alter table racun add foreign key(djelatnik) references djelatnik(sifra);
 alter table stavka add foreign key(proizvod) references proizvod(sifra);
 alter table stavka add foreign key(racun) references racun(sifra);
+
 
 select * from pcshop;
 insert into pcshop(naziv)
@@ -97,13 +99,22 @@ values  ('Razer podloga',299.99,'2023-03-03'),
 select * from stavka;
 insert into stavka(proizvod,racun,kolicina)
 values  (1,1,1),
-        (2,1,1),
+        (2,1,2),
         (3,1,1),
-        (4,2,1),
+        (4,1,2),
         (5,2,1),
-        (6,3,1),
-        (7,3,1),
-        (8,3,1);
+        (6,2,2),
+        (7,2,1),
+        (8,2,2),
+        (9,3,1),
+        (10,3,2),
+        (11,3,1),
+        (12,3,3),
+        (13,1,1),
+        (14,2,3),
+        (15,3,1),
+        (16,1,1);
+        
              
 update proizvod set naziv = 'Razer slusalice' where sifra=1;
 update proizvod set naziv = 'Razer stolica' where sifra=2;
@@ -131,4 +142,66 @@ order by e.proizvod asc;
 
 select * from proizvod;
 delete from proizvod where cijena = 300;
-delete from proizvod where cijena = 1;
+
+select * from proizvod where sifra > 1;
+select * from proizvod where sifra < 10;
+select * from proizvod where sifra = 10;
+select * from proizvod where sifra != 1;
+select * from proizvod where sifra=3 or sifra=11;
+select * from proizvod where not sifra = 1;
+select * from proizvod where sifra=3 or sifra=5;
+select * from proizvod where sifra=1 or sifra=3 or sifra=11;
+select * from proizvod where sifra in (1,3,6,9,13,19);
+select * from proizvod where sifra>=2 and sifra<=15;
+select * from proizvod where sifra between 6 and 15;
+
+select * from korisnik where ime='Iva';
+select * from korisnik where ime like 'I%';
+select * from korisnik where ime like '%a';
+select * from korisnik where ime like '%Petra%';
+select * from korisnik where ime not like '%s';
+select * from korisnik where ime not like '%a';
+select * from korisnik where ime not like 'p%';
+
+select * from proizvod where naziv like '%corsair%';
+select * from proizvod where naziv not like '%corsair%';
+select * from proizvod where naziv like '%logitech%';
+select * from proizvod where naziv like '%corsair%';
+select * from proizvod where naziv like '%amd%';
+select * from proizvod where naziv like 'c%';
+
+
+# Ponavljanje (ostaleSQLnaredbe)
+
+# order by i limit klauzule
+select naziv
+from proizvod 
+where sifra>1
+order by naziv desc
+limit 4;
+
+select naziv
+from proizvod 
+where sifra<7
+order by naziv desc
+limit 5;
+
+select naziv
+from proizvod 
+where sifra>1
+order by naziv asc
+limit 14;
+
+# distinct oznaka
+select distinct naziv from proizvod;
+select distinct cijena from proizvod;
+select distinct garancija from proizvod;
+
+select distinct datumpocetka from racun;
+select distinct brojracuna from racun;
+select distinct korisnik from racun;
+select distinct djelatnik from racun;
+
+select distinct ime from djelatnik;
+select distinct prezime from djelatnik;
+select distinct pcshop from djelatnik;  
